@@ -1,0 +1,266 @@
+
+{% extends "basic.html" %}
+{% load static %}
+
+ 
+	{% block head %}
+
+
+{% endblock %}
+
+
+
+
+{% block body %}
+
+
+    
+<div class="jumbotron">
+    <h1 class="display-4">Take Care of Yourself...</h1>
+    <p class="lead">
+      Prioritize your mental and emotional well-being with our smart stress prediction and doctor consultation platform. 
+      Our system analyzes your lifestyle patterns to assess stress levels and provide personalized insights. 
+      Whether you're seeking stress management tips or professional medical advice, our platform connects you with 
+      experienced doctors for online consultations. Take control of your health, access expert guidance, and find the 
+      support you need all in one convenient place.     
+  
+     {% if user.is_authenticated %}
+
+     
+     {% else %}
+
+      <p class="lead">
+      <!-- <button type="button" class="btn btn-primary btn-lg"  data-toggle="modal" data-target=".bd-example-modal-lg">Get started</button> -->
+      <a id="links" class="btn btn-outline-info btn-block" href="{% url 'quickpredict' %}">Check Stress </a><br> 
+      </p>
+    
+
+</div>
+
+<br><br><br>
+<div class="container mt-5 mb-3" style="width:fit-content;">
+      <center>
+        <h1>Sign-In As</h1>
+        </center>
+      
+      
+      <form>
+          <div class="container mt-5 mb-5">
+       <div class="row">
+          <div class="col">
+             <a href="{% url 'sign_in_admin' %}">
+      <img  alt="admin" src="{% static 'homepage/admin.png' %}"  class="img">
+      </a>
+          </div>
+      
+          <div class="col">
+      <a href="{% url 'sign_in_doctor' %}">
+      <img  alt="doctor" src="{% static 'homepage/doctor.png' %}"  class="img">
+      </a>
+          </div>
+      
+          <div class="col">
+      <a href="{% url 'sign_in_patient' %}">
+      <img  alt="patient" src="{% static 'homepage/patient.png' %}"  class="img">
+      </a>
+          </div>
+        </div>
+        </div>
+      </form>
+</div>
+
+
+    
+
+    {% endif %}
+
+<br><br>
+
+
+
+
+<!-- Large modal -->
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+   
+<center>
+  <h1>Sign-In As</h1>
+  </center>
+<br><br>
+
+<center>
+<form>
+    <div class="container mt-5 mb-5">
+ <div class="row">
+    <div class="col">
+       <a href="{% url 'sign_in_admin' %}">
+<img  alt="admin" src="{% static 'homepage/admin.png' %}"  class="img">
+</a>
+    </div>
+
+    <div class="col">
+<a href="{% url 'sign_in_doctor' %}">
+<img  alt="doctor" src="{% static 'homepage/doctor.png' %}"  class="img">
+</a>
+    </div>
+
+    <div class="col">
+<a href="{% url 'sign_in_patient' %}">
+<img  alt="patient" src="{% static 'homepage/patient.png' %}"  class="img">
+</a>
+    </div>
+  </div>
+  </div>
+</form>
+</center>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- Large modal -->
+
+<div class="modal fade bd-example-modal-lg2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+   
+<center>
+  <h1>Sign-Up As</h1>
+  </center>
+<br><br>
+
+<center>
+<form>
+    <div class="container mt-5 mb-5 ml-5 mr-5">
+ <div class="row">
+
+    <div class="col">
+<a href="{% url 'signup_doctor' %}">
+<img  alt="doctor" src="{% static 'homepage/doctor.png' %}"  class="img">
+</a>
+    </div>
+
+    <div class="col">
+<a href="{% url 'signup_patient' %}">
+<img  alt="patient" src="{% static 'homepage/patient.png' %}"  class="img">
+</a>
+    </div>
+  </div>
+  </div>
+</form>
+</center>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<br><br><br><br>
+<center><h2>Our Doctors</h2></center>
+<div class="row mt-5 mb-5">
+    <div class="col">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Dr. ANJALI PRIYANWADA </h5>
+                <img  alt="admin" src="{% static 'homepage/31.jpg' %}" width="200" height="150" class="rounded">
+                <p class="card-text">34/2, Bauddhaloka Mawatha, Colombo 07</p>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Dr. VIDUSHA DINETH </h5>
+                <img  alt="admin" src="{% static 'homepage/41.jpg' %}" width="200" height="150" class="rounded">
+                <p class="card-text">2nd lane, Katubedda, Moratuwa</p>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Dr. DEWMINI HANSIKA</h5>
+                <img  alt="admin" src="{% static 'homepage/72.jpg' %}" width="200" height="150" class="rounded">
+                <p class="card-text">40/1A, Sirimal Place, Ratmlana</p>
+                
+            </div>
+        </div>
+    </div>
+</div>
+  
+
+<br><br><br><br>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="footer" class="card bg-dark text-white">
+      <div class="card-body">
+        Contact-
+     
+    <ul >
+     
+      <li >
+        <h5 class="mb-1">Email: chathuryadias@gmail.com</h5>
+      </li>
+      <li >
+        <h5 class="mb-1">Contact no. 0719969211</h5>
+      </li>
+      <li >
+        <h5 class="mb-1">Address: 20/1A, 3rd Lane Rathmalana.</h5>
+        <div class="footer-copyright text-center">© 2025 Copyright:
+          <a href="#"> https://github.com/Chathurya99</a>
+        </div>
+      </li>
+      
+    </ul>
+  </div>
+  </div>
+
+  
+ 
+
+
+
+
+
+</div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+    
+
+
+
+
+    
+{% endblock %}

@@ -1,0 +1,256 @@
+{% extends "basic.html" %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'patient\checkstress\dps.css' %}">
+    <style>
+        /* Centering the form */
+        .prediction-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            /* background: linear-gradient(to right, #6dd5ed, #2193b0); */
+            padding: 20px;
+        }
+
+        .prediction-form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 50%;
+            text-align: center;
+        }
+
+        /* Form fields styling */
+        .form-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #f8f9fa;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        select:focus { 
+            box-shadow: 0px 0px 5px rgba(52, 152, 219, 0.5);
+        }
+
+        /* Predict Button */
+        .predict-btn {
+            background-color: #1085e5;
+            color: white;
+            font-size: 18px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .predict-btn:hover {
+            background-color: #e64a19;
+            box-shadow: 0px 5px 10px rgba(230, 74, 25, 0.4);
+        }
+
+        /* Prediction Result */
+        .prediction-result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
+            padding: 10px;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<main>
+    <section class="prediction-section">
+        <h1></h1>
+        <form method="POST" class="prediction-form" action="checkstress">
+            {% csrf_token %}
+            
+            <!-- Gender -->
+            <div class="form-group">
+                <label for="Gender">Gender</label>
+                <select name="Gender" required>
+                    <option value="0">Female</option>
+                    <option value="1">Male</option>
+                </select>
+            </div>
+            
+            <!-- Family History -->
+            <div class="form-group">
+                <label for="family_history">Family History of Mental Illness : Do you have a family history of mental illness?</label>
+                <select name="family_history" required>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            
+            <!-- Treatment -->
+            <div class="form-group">
+                <label for="treatment">Treatment : Have you sought treatment for a mental health condition?</label>
+                <select name="treatment" required>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            
+            <!-- Coping Struggles -->
+            <div class="form-group">
+                <label for="Coping_Struggles">Coping Struggles - Do you find it difficult to cope with daily problems or stress?</label>
+                <select name="Coping_Struggles" required>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            
+            <!-- Occupation -->
+            <div class="form-group">
+                <label for="Occupation">Occupation : What is your current occupation?</label>
+                <select name="Occupation" required>
+                    <option value="Student">Student</option>
+                    <option value="Business">Business</option>
+                    <option value="Corporate">Corporate</option>
+                    <option value="Housewife">Housewife</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+            
+            <!-- Days Indoors -->
+            <div class="form-group">
+                <label for="Days_Indoors">Days Spent Indoors : How many days have you spent indoors?</label>
+                <select name="Days_Indoors" required>
+                    <option value="1-14 days">1-14 Days</option>
+                    <option value="15-30 days">15-30 Days</option>
+                    <option value="31-60 days">31-60 Days</option>
+                    <option value="Go out Every day">Go out Every Day</option>
+                    <option value="More than 2 months">More than 2 Months</option>
+                </select>
+            </div>
+            
+            <!-- Changes in Habits -->
+            <div class="form-group">
+                <label for="Changes_Habits">Changes in Habits : Have you experienced major changes in your eating or sleeping habits?</label>
+                <select name="Changes_Habits" required>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                    <option value="Maybe">Maybe</option>
+                </select>
+            </div>
+            
+            <!-- Mental Health History -->
+            <div class="form-group">
+                <label for="Mental_Health_History">Mental Health History : Do you have a history of mental health issues, including any previous diagnoses or treatments?</label>
+                <select name="Mental_Health_History" required>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+            
+            <!-- Mood Swings -->
+            <div class="form-group">
+                <label for="Mood_Swings">Mood Swings : Do you experience extreme changes in mood?</label>
+                <select name="Mood_Swings" required>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+            
+            <!-- Work Interest -->
+            <div class="form-group">
+                <label for="Work_Interest">Interest in Work : Have you lost interest in your work?</label>
+                <select name="Work_Interest" required>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+            
+            <!-- Social Weakness -->
+            <div class="form-group">
+                <label for="Social_Weakness">Social Anxiety : Do you feel mentally weak or anxious when interacting with others?</label>
+                <select name="Social_Weakness" required>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+            
+            <!-- Mental Health Interview -->
+            <div class="form-group">
+                <label for="mental_health_interview">Mental Health Interview : Would you feel comfortable discussing mental health issues in a structured interview?</label>
+                <select name="mental_health_interview" required>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+            
+            <!-- Care Options -->
+            <div class="form-group">
+                <label for="care_options">Care Options : Are you aware of the mental health care options available, such as therapy, medication, or support groups?</label>
+                <select name="care_options" required>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="predict-btn">Predict Mental Health Status</button>
+        </form>
+        
+        <!-- Prediction Results -->
+        <div class="form-group">
+            {% if pred is not none %}
+            <p class="prediction-result">
+                Predicted Growing Stress Status: 
+                {% if pred == 0 %}
+                    Maybe
+                {% elif pred == 1 %}
+                    No
+                {% elif pred == 2 %}
+                    Yes
+                {% endif %}
+            </p>
+            {% endif %}
+
+            <div >  <form action="consult_a_doctor" method="GET">
+                {% csrf_token %} 
+                <button id="consultbtn" type="submit" class="btn btn-primary"> Consult a <span id="consultdoctor"  name="consultdoctor" > </span> doctor</button>
+              </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- <div >  <form action="consult_a_doctor" method="GET">
+        {% csrf_token %} 
+        <button id="consultbtn" type="submit" class="btn btn-primary"> Consult a <span id="consultdoctor"  name="consultdoctor" > </span> doctor</button>
+      </form>
+    </div> -->
+      
+ 
+</div>
+</main>
+
+{% endblock %}

@@ -1,0 +1,249 @@
+{% extends "basic.html" %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'patient/checkstress/dps.css' %}">
+    <style>
+        /* Centering the form */
+        .prediction-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .prediction-form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 50%;
+            text-align: center;
+        }
+
+        /* Form fields styling */
+        .form-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #f8f9fa;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        select:focus { 
+            box-shadow: 0px 0px 5px rgba(52, 152, 219, 0.5);
+        }
+
+        /* Predict Button */
+        .predict-btn {
+            background-color: #1085e5;
+            color: white;
+            font-size: 18px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .predict-btn:hover {
+            background-color: #e64a19;
+            box-shadow: 0px 5px 10px rgba(230, 74, 25, 0.4);
+        }
+
+        /* Prediction Result */
+        .prediction-result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
+            padding: 10px;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<main>
+    <section class="prediction-section">
+        <h1></h1>
+        <form method="POST" class="prediction-form" action="quickpredict">
+            {% csrf_token %}
+            
+            <!-- Gender -->
+            <div class="form-group">
+                <label for="Gender">Gender</label>
+                <select name="Gender" required>
+                    <option value="0" {% if Gender == '0' %}selected{% endif %}>Female</option>
+                    <option value="1" {% if Gender == '1' %}selected{% endif %}>Male</option>
+                </select>
+            </div>
+            
+            <!-- Family History -->
+            <div class="form-group">
+                <label for="family_history">Do you have a family history of mental illness?</label>
+                <select name="family_history" required>
+                    <option value="0" {% if family_history == '0' %}selected{% endif %}>No</option>
+                    <option value="1" {% if family_history == '1' %}selected{% endif %}>Yes</option>
+                </select>
+            </div>
+            
+            <!-- Treatment -->
+            <div class="form-group">
+                <label for="treatment">Have you sought treatment for a mental health condition?</label>
+                <select name="treatment" required>
+                    <option value="0" {% if treatment == '0' %}selected{% endif %}>No</option>
+                    <option value="1" {% if treatment == '1' %}selected{% endif %}>Yes</option>
+                </select>
+            </div>
+            
+            <!-- Coping Struggles -->
+            <div class="form-group">
+                <label for="Coping_Struggles">Do you find it difficult to cope with daily problems or stress?</label>
+                <select name="Coping_Struggles" required>
+                    <option value="0" {% if Coping_Struggles == '0' %}selected{% endif %}>No</option>
+                    <option value="1" {% if Coping_Struggles == '1' %}selected{% endif %}>Yes</option>
+                </select>
+            </div>
+            
+            <!-- Occupation -->
+            <div class="form-group">
+                <label for="Occupation">What is your current occupation?</label>
+                <select name="Occupation" required>
+                    <option value="Student" {% if Occupation == 'Student' %}selected{% endif %}>Student</option>
+                    <option value="Business" {% if Occupation == 'Business' %}selected{% endif %}>Business</option>
+                    <option value="Corporate" {% if Occupation == 'Corporate' %}selected{% endif %}>Corporate</option>
+                    <option value="Housewife" {% if Occupation == 'Housewife' %}selected{% endif %}>Housewife</option>
+                    <option value="Others" {% if Occupation == 'Others' %}selected{% endif %}>Others</option>
+                </select>
+            </div>
+            
+            <!-- Days Indoors -->
+            <div class="form-group">
+                <label for="Days_Indoors">How many days have you spent indoors?</label>
+                <select name="Days_Indoors" required>
+                    <option value="1-14 days" {% if Days_Indoors == '1-14 days' %}selected{% endif %}>1-14 Days</option>
+                    <option value="15-30 days" {% if Days_Indoors == '15-30 days' %}selected{% endif %}>15-30 Days</option>
+                    <option value="31-60 days" {% if Days_Indoors == '31-60 days' %}selected{% endif %}>31-60 Days</option>
+                    <option value="Go out Every day" {% if Days_Indoors == 'Go out Every day' %}selected{% endif %}>Go out Every Day</option>
+                    <option value="More than 2 months" {% if Days_Indoors == 'More than 2 months' %}selected{% endif %}>More than 2 Months</option>
+                </select>
+            </div>
+            
+            <!-- Changes in Habits -->
+            <div class="form-group">
+                <label for="Changes_Habits">Have you experienced major changes in your eating or sleeping habits?</label>
+                <select name="Changes_Habits" required>
+                    <option value="Maybe" {% if Changes_Habits == 'Maybe' %}selected{% endif %}>Maybe</option>
+                    <option value="No" {% if Changes_Habits == 'No' %}selected{% endif %}>No</option>
+                    <option value="Yes" {% if Changes_Habits == 'Yes' %}selected{% endif %}>Yes</option>
+                    
+                </select>
+            </div>
+            
+            <!-- Mental Health History -->
+            <div class="form-group">
+                <label for="Mental_Health_History">Do you have a history of mental health issues?</label>
+                <select name="Mental_Health_History" required>
+                    <option value="Maybe" {% if Mental_Health_History == 'Maybe' %}selected{% endif %}>Maybe</option>
+                    <option value="No" {% if Mental_Health_History == 'No' %}selected{% endif %}>No</option>
+                    <option value="Yes" {% if Mental_Health_History == 'Yes' %}selected{% endif %}>Yes</option>
+                </select>
+            </div>
+            
+            <!-- Mood Swings -->
+            <div class="form-group">
+                <label for="Mood_Swings">Do you experience extreme changes in mood?</label>
+                <select name="Mood_Swings" required>
+                    
+                    <option value="High" {% if Mood_Swings == 'High' %}selected{% endif %}>High</option>
+                    <option value="Low" {% if Mood_Swings == 'Low' %}selected{% endif %}>Low</option>
+                    <option value="Medium" {% if Mood_Swings == 'Medium' %}selected{% endif %}>Medium</option>
+                    
+                </select>
+            </div>
+            
+            <!-- Work Interest -->
+            <div class="form-group">
+                <label for="Work_Interest">Have you lost interest in your work?</label>
+                <select name="Work_Interest" required>
+                    <option value="Maybe" {% if Work_Interest == 'Maybe' %}selected{% endif %}>Maybe</option>
+                    <option value="No" {% if Work_Interest == 'No' %}selected{% endif %}>No</option>
+                    <option value="Yes" {% if Work_Interest == 'Yes' %}selected{% endif %}>Yes</option>
+                </select>
+            </div>
+            
+            <!-- Social Weakness -->
+            <div class="form-group">
+                <label for="Social_Weakness">Do you feel mentally weak or anxious when interacting with others?</label>
+                <select name="Social_Weakness" required>
+                    <option value="Maybe" {% if Social_Weakness == 'Maybe' %}selected{% endif %}>Maybe</option>
+                    <option value="No" {% if Social_Weakness == 'No' %}selected{% endif %}>No</option>
+                    <option value="Yes" {% if Social_Weakness == 'Yes' %}selected{% endif %}>Yes</option>
+                </select>
+            </div>
+            
+            <!-- Mental Health Interview -->
+            <div class="form-group">
+                <label for="mental_health_interview">Would you feel comfortable discussing mental health?</label>
+                <select name="mental_health_interview" required>
+                    
+                    <option value="Maybe" {% if mental_health_interview == 'Maybe' %}selected{% endif %}>Maybe</option>
+                    <option value="No" {% if mental_health_interview == 'No' %}selected{% endif %}>No</option>
+                    <option value="Yes" {% if mental_health_interview == 'Yes' %}selected{% endif %}>Yes</option>
+                </select>
+            </div>
+            
+            <!-- Care Options -->
+            <div class="form-group">
+                <label for="care_options">Are you aware of the mental health care options available?</label>
+                <select name="care_options" required>
+                    <option value="No" {% if care_options == 'No' %}selected{% endif %}>No</option>
+                    <option value="Notsure" {% if care_options == 'Notsure' %}selected{% endif %}>Notsure</option>
+                    <option value="Yes" {% if care_options == 'Yes' %}selected{% endif %}>Yes</option>
+                </select>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="predict-btn">Predict Mental Health Status</button>
+        </form>
+        
+        <!-- Prediction Results -->
+        <div class="form-group">
+            {% if pred is not none %}
+            <p class="prediction-result">
+                Predicted Growing Stress Status: 
+                {% if pred == 0 %}
+                    Maybe
+                {% elif pred == 1 %}
+                    No
+                {% elif pred == 2 %}
+                    Yes
+                {% endif %}
+            </p>
+            {% endif %}
+        </div>
+    </section>
+</main>
+
+{% endblock %}

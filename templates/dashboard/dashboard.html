@@ -1,0 +1,118 @@
+{% extends "basic.html" %}
+{% load static %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist@2.12.1"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .chart-container {
+            margin-bottom: 30px;
+        }
+        .small-chart {
+            height: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+     
+
+        <!-- Dropdown to select the attribute -->
+        <form method="get" action="{% url 'dashboard' %}">
+            <div class="form-group">
+                <label for="attribute">Select Attribute:</label>
+                <select name="attribute" id="attribute" class="form-control" onchange="this.form.submit()">
+                    {% for attribute in attributes %}
+                        <option value="{{ attribute }}" {% if attribute == selected_attribute %}selected{% endif %}>{{ attribute }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+
+        <div class="row">
+            <!-- Pie Chart for the selected attribute -->
+            <div class="col-md-4">
+                <div class="chart-container small-chart">
+                    <h4 class="text-center">Distribution of {{ selected_attribute }}</h4>
+                    <div>
+                        {{ pie_chart_div|safe }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Line Chart for Growing Stress Over Time -->
+            <div class="col-md-4">
+                <div class="chart-container">
+                    <h4 class="text-center">Growing Stress Over Time</h4>
+                    <div>
+                        {{ line_chart_div|safe }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stress by Days Indoors -->
+            <div class="col-md-4">
+                <div class="chart-container">
+                    <h4 class="text-center">Growing Stress by Days Indoors</h4>
+                    <div>
+                        {{ stress_days_bar_div|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Coping Struggles -->
+            <div class="col-md-4">
+                <div class="chart-container">
+                    <h4 class="text-center">Growing Stress by Coping Struggles</h4>
+                    <div>
+                        {{ coping_bar_div|safe }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Work Interest -->
+            <div class="col-md-4">
+                <div class="chart-container">
+                    <h4 class="text-center">Growing Stress by Work Interest</h4>
+                    <div>
+                        {{ work_interest_bar_div|safe }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Weakness -->
+            <div class="col-md-4">
+                <div class="chart-container">
+                    <h4 class="text-center">Growing Stress by Social Weakness</h4>
+                    <div>
+                        {{ social_weakness_bar_div|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Mood Swings -->
+            <div class="col-md-4">
+                <div class="chart-container">
+                    <h4 class="text-center">Mood Swings Distribution</h4>
+                    <div>
+                        {{ mood_swings_bar_div|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}
