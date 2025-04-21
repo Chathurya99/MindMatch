@@ -24,7 +24,7 @@ MindMatch is a machine learning-powered web application that predicts user stres
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/Chathurya99
+git clone https://github.com/Chathurya99/MindMatch
 cd mindmatch
 
 2. Create & activate a virtual environment
